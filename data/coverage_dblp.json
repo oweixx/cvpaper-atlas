@@ -1,0 +1,62 @@
+[
+  {
+    "source": "DBLP SPARQL",
+    "venue": "CVPR",
+    "stream": "conf/cvpr",
+    "url": "https://sparql.dblp.org/sparql?query=PREFIX+dblp%3A+%3Chttps%3A%2F%2Fdblp.org%2Frdf%2Fschema%23%3E%0ASELECT+%28COUNT%28DISTINCT+%3Fp%29+AS+%3Fcount%29+WHERE+%7B%3Fp+dblp%3ApublishedInStream+%3Chttps%3A%2F%2Fdblp.org%2Fstreams%2Fconf%2Fcvpr%3E%3B%0A+++++++++++++++++++++dblp%3Atitle+%3Ftitle%3B+dblp%3AyearOfPublication+%3Fyear%3B+dblp%3ApublishedIn+%3Flabel%3B+dblp%3AauthoredBy+%3Fauthor+.%0A+++++++++++++++++++++FILTER%28STR%28%3Fyear%29+%3E%3D+%221983%22+%26%26+STR%28%3Fyear%29+%3C%3D+%222026%22%29+FILTER%28%3Flabel+%3D+%22CVPR%22+%7C%7C+STRSTARTS%28%3Flabel%2C+%22CVPR+%28%22%29+%26%26+REGEX%28%3Flabel%2C+%22%5B0-9%5D%2B%5B%29%5D%24%22%29%29%7D&format=json",
+    "expected": 28455,
+    "retrieved": 28455,
+    "complete": true,
+    "retrieved_at": "2026-11-12"
+  },
+  {
+    "source": "DBLP SPARQL",
+    "venue": "ICCV",
+    "stream": "conf/iccv",
+    "url": "https://sparql.dblp.org/sparql?query=PREFIX+dblp%3A+%3Chttps%3A%2F%2Fdblp.org%2Frdf%2Fschema%23%3E%0ASELECT+%28COUNT%28DISTINCT+%3Fp%29+AS+%3Fcount%29+WHERE+%7B%3Fp+dblp%3ApublishedInStream+%3Chttps%3A%2F%2Fdblp.org%2Fstreams%2Fconf%2Ficcv%3E%3B%0A+++++++++++++++++++++dblp%3Atitle+%3Ftitle%3B+dblp%3AyearOfPublication+%3Fyear%3B+dblp%3ApublishedIn+%3Flabel%3B+dblp%3AauthoredBy+%3Fauthor+.%0A+++++++++++++++++++++FILTER%28STR%28%3Fyear%29+%3E%3D+%221987%22+%26%26+STR%28%3Fyear%29+%3C%3D+%222026%22%29+FILTER%28%3Flabel+%3D+%22ICCV%22+%7C%7C+STRSTARTS%28%3Flabel%2C+%22ICCV+%28%22%29+%26%26+REGEX%28%3Flabel%2C+%22%5B0-9%5D%2B%5B%29%5D%24%22%29%29%7D&format=json",
+    "expected": 11661,
+    "retrieved": 11661,
+    "complete": true,
+    "retrieved_at": "2026-11-12"
+  },
+  {
+    "source": "DBLP SPARQL",
+    "venue": "ECCV",
+    "stream": "conf/eccv",
+    "url": "https://sparql.dblp.org/sparql?query=PREFIX+dblp%3A+%3Chttps%3A%2F%2Fdblp.org%2Frdf%2Fschema%23%3E%0ASELECT+%28COUNT%28DISTINCT+%3Fp%29+AS+%3Fcount%29+WHERE+%7B%3Fp+dblp%3ApublishedInStream+%3Chttps%3A%2F%2Fdblp.org%2Fstreams%2Fconf%2Feccv%3E%3B%0A+++++++++++++++++++++dblp%3Atitle+%3Ftitle%3B+dblp%3AyearOfPublication+%3Fyear%3B+dblp%3ApublishedIn+%3Flabel%3B+dblp%3AauthoredBy+%3Fauthor+.%0A+++++++++++++++++++++FILTER%28STR%28%3Fyear%29+%3E%3D+%221990%22+%26%26+STR%28%3Fyear%29+%3C%3D+%222026%22%29+FILTER%28%3Flabel+%3D+%22ECCV%22+%7C%7C+STRSTARTS%28%3Flabel%2C+%22ECCV+%28%22%29+%26%26+REGEX%28%3Flabel%2C+%22%5B0-9%5D%2B%5B%29%5D%24%22%29%29%7D&format=json",
+    "expected": 11492,
+    "retrieved": 11492,
+    "complete": true,
+    "retrieved_at": "2026-11-12"
+  },
+  {
+    "source": "DBLP SPARQL",
+    "venue": "WACV",
+    "stream": "conf/wacv",
+    "url": "https://sparql.dblp.org/sparql?query=PREFIX+dblp%3A+%3Chttps%3A%2F%2Fdblp.org%2Frdf%2Fschema%23%3E%0ASELECT+%28COUNT%28DISTINCT+%3Fp%29+AS+%3Fcount%29+WHERE+%7B%3Fp+dblp%3ApublishedInStream+%3Chttps%3A%2F%2Fdblp.org%2Fstreams%2Fconf%2Fwacv%3E%3B%0A+++++++++++++++++++++dblp%3Atitle+%3Ftitle%3B+dblp%3AyearOfPublication+%3Fyear%3B+dblp%3ApublishedIn+%3Flabel%3B+dblp%3AauthoredBy+%3Fauthor+.%0A+++++++++++++++++++++FILTER%28STR%28%3Fyear%29+%3E%3D+%221992%22+%26%26+STR%28%3Fyear%29+%3C%3D+%222026%22%29+FILTER%28%3Flabel+%3D+%22WACV%22+%7C%7C+%3Flabel+%3D+%22WACV%2FMOTION%22%29%7D&format=json",
+    "expected": 6328,
+    "retrieved": 6328,
+    "complete": true,
+    "retrieved_at": "2026-11-12"
+  },
+  {
+    "source": "DBLP SPARQL",
+    "venue": "TPAMI",
+    "stream": "journals/pami",
+    "url": "https://sparql.dblp.org/sparql?query=PREFIX+dblp%3A+%3Chttps%3A%2F%2Fdblp.org%2Frdf%2Fschema%23%3E%0ASELECT+%28COUNT%28DISTINCT+%3Fp%29+AS+%3Fcount%29+WHERE+%7B%3Fp+dblp%3ApublishedInStream+%3Chttps%3A%2F%2Fdblp.org%2Fstreams%2Fjournals%2Fpami%3E%3B%0A+++++++++++++++++++++dblp%3Atitle+%3Ftitle%3B+dblp%3AyearOfPublication+%3Fyear%3B+dblp%3ApublishedIn+%3Flabel%3B+dblp%3AauthoredBy+%3Fauthor+.%0A+++++++++++++++++++++FILTER%28STR%28%3Fyear%29+%3E%3D+%221979%22+%26%26+STR%28%3Fyear%29+%3C%3D+%222026%22%29+%7D&format=json",
+    "expected": 10759,
+    "retrieved": 10759,
+    "complete": true,
+    "retrieved_at": "2026-11-12"
+  },
+  {
+    "source": "DBLP SPARQL",
+    "venue": "IJCV",
+    "stream": "journals/ijcv",
+    "url": "https://sparql.dblp.org/sparql?query=PREFIX+dblp%3A+%3Chttps%3A%2F%2Fdblp.org%2Frdf%2Fschema%23%3E%0ASELECT+%28COUNT%28DISTINCT+%3Fp%29+AS+%3Fcount%29+WHERE+%7B%3Fp+dblp%3ApublishedInStream+%3Chttps%3A%2F%2Fdblp.org%2Fstreams%2Fjournals%2Fijcv%3E%3B%0A+++++++++++++++++++++dblp%3Atitle+%3Ftitle%3B+dblp%3AyearOfPublication+%3Fyear%3B+dblp%3ApublishedIn+%3Flabel%3B+dblp%3AauthoredBy+%3Fauthor+.%0A+++++++++++++++++++++FILTER%28STR%28%3Fyear%29+%3E%3D+%221987%22+%26%26+STR%28%3Fyear%29+%3C%3D+%222026%22%29+%7D&format=json",
+    "expected": 3985,
+    "retrieved": 3985,
+    "complete": true,
+    "retrieved_at": "2026-11-12"
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "source": "CVF",
+    "venue": "WACV",
+    "year": 2026,
+    "url": "https://openaccess.thecvf.com/WACV2026?day=all",
+    "retained": 831,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "ICCV",
+    "year": 2025,
+    "url": "https://openaccess.thecvf.com/ICCV2025?day=all",
+    "retained": 2701,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2025,
+    "url": "https://openaccess.thecvf.com/CVPR2025?day=all",
+    "retained": 2871,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "WACV",
+    "year": 2025,
+    "url": "https://openaccess.thecvf.com/WACV2025?day=all",
+    "retained": 929,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "WACV",
+    "year": 2024,
+    "url": "https://openaccess.thecvf.com/WACV2024?day=all",
+    "retained": 846,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2026,
+    "url": "https://openaccess.thecvf.com/CVPR2026?day=all",
+    "retained": 4042,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2024,
+    "url": "https://openaccess.thecvf.com/CVPR2024?day=all",
+    "retained": 2716,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "ICCV",
+    "year": 2023,
+    "url": "https://openaccess.thecvf.com/ICCV2023?day=all",
+    "retained": 2156,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2023,
+    "url": "https://openaccess.thecvf.com/CVPR2023?day=all",
+    "retained": 2353,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "WACV",
+    "year": 2023,
+    "url": "https://openaccess.thecvf.com/WACV2023?day=all",
+    "retained": 639,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "WACV",
+    "year": 2022,
+    "url": "https://openaccess.thecvf.com/WACV2022?day=all",
+    "retained": 406,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "ICCV",
+    "year": 2021,
+    "url": "https://openaccess.thecvf.com/ICCV2021?day=all",
+    "retained": 1612,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2022,
+    "url": "https://openaccess.thecvf.com/CVPR2022?day=all",
+    "retained": 2074,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "WACV",
+    "year": 2021,
+    "url": "https://openaccess.thecvf.com/WACV2021?day=all",
+    "retained": 406,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2021,
+    "url": "https://openaccess.thecvf.com/CVPR2021?day=all",
+    "retained": 1660,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "WACV",
+    "year": 2020,
+    "url": "https://openaccess.thecvf.com/WACV2020.py?day=all",
+    "retained": 378,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2020,
+    "url": "https://openaccess.thecvf.com/CVPR2020.py?day=all",
+    "retained": 1466,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2019,
+    "url": "https://openaccess.thecvf.com/CVPR2019.py?day=all",
+    "retained": 1294,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "ICCV",
+    "year": 2019,
+    "url": "https://openaccess.thecvf.com/ICCV2019.py?day=all",
+    "retained": 1075,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "ICCV",
+    "year": 2017,
+    "url": "https://openaccess.thecvf.com/ICCV2017.py?day=all",
+    "retained": 621,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2017,
+    "url": "https://openaccess.thecvf.com/CVPR2017.py?day=all",
+    "retained": 783,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2016,
+    "url": "https://openaccess.thecvf.com/CVPR2016.py?day=all",
+    "retained": 643,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "ICCV",
+    "year": 2015,
+    "url": "https://openaccess.thecvf.com/ICCV2015.py?day=all",
+    "retained": 526,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2015,
+    "url": "https://openaccess.thecvf.com/CVPR2015.py?day=all",
+    "retained": 602,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2014,
+    "url": "https://openaccess.thecvf.com/CVPR2014.py?day=all",
+    "retained": 540,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2018,
+    "url": "https://openaccess.thecvf.com/CVPR2018.py?day=all",
+    "retained": 979,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "ICCV",
+    "year": 2013,
+    "url": "https://openaccess.thecvf.com/ICCV2013.py?day=all",
+    "retained": 454,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "CVF",
+    "venue": "CVPR",
+    "year": 2013,
+    "url": "https://openaccess.thecvf.com/CVPR2013.py?day=all",
+    "retained": 471,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  },
+  {
+    "source": "ECVA",
+    "venue": "ECCV",
+    "url": "https://www.ecva.net/papers.php",
+    "retained": 6166,
+    "retrieved_at": "2026-11-12",
+    "complete": true
+  }
+]

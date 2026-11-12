@@ -1,0 +1,16 @@
+{
+  "passed": [
+    "Full corpus loads and paginates",
+    "Known DOI resolves to ResNet; available abstract expands",
+    "Empty results and reset",
+    "Venue and year filters match dataset totals",
+    "Topic filter and CSV export contain matching records",
+    "Pagination and page size",
+    "Annual trend chart and annual counts",
+    "Co-author network, threshold and author navigation",
+    "Provenance and venue coverage",
+    "Mobile viewport has no page-level horizontal overflow"
+  ],
+  "browser_errors": [],
+  "papers": 74784
+}
