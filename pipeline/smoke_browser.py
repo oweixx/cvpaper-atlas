@@ -71,16 +71,92 @@ def main():
         page.get_by_role('link', name='Research trends', exact=True).click()
         expect(page.locator('#trend-chart svg')).to_be_visible()
         expect(page.locator('#trends-body tr')).to_have_count(summary['max_year'] - summary['min_year'] + 1)
-        checks.append('Annual trend chart and annual counts')
-        page.get_by_role('link', name='Author network', exact=True).click()
-        expect(page.locator('#network-authors button')).to_have_count(100, timeout=15000)
-        page.locator('#network-authors button').first.click()
-        expect(page.locator('#selected-author')).not_to_have_text('Select an author')
-        page.locator('#network-threshold').select_option('10')
-        expect(page.locator('#network-note')).to_contain_text('100 author names')
-        page.get_by_role('button', name='View papers', exact=False).click()
-        expect(page.locator('#view-explore')).to_be_visible()
-        checks.append('Co-author network, threshold and author navigation')
+        expect(page.locator('#trends-body tr').filter(has=page.get_by_text('2025', exact=True)).locator('td').nth(3)).to_have_text('Not held')
+        checks.append('Annual trend chart and calendar-aware annual counts')
+        corpus = [p for venue in summary['venues'] for p in json.loads((DATA / (venue.lower()+'.json')).read_text(encoding='utf-8'))]
+        geo = json.loads((DATA / 'geography.json').read_text(encoding='utf-8'))
+        page.get_by_role('link', name='Research areas', exact=True).click()
+        expect(page.locator('#research-chart svg')).to_be_visible()
+        assert page.get_by_role('link', name='Author network', exact=True).count() == 0
+        page.locator('#research-venue').select_option('ECCV')
+        page.locator('#research-from').fill('2025')
+        page.locator('#research-to').fill('2025')
+        page.locator('#research-to').press('Tab')
+        expect(page.locator('#research-kpis .stat-value').first).to_have_text('0')
+        expect(page.locator('#research-chart')).to_contain_text('No data')
+        page.locator('#research-from').fill('2024')
+        page.locator('#research-to').fill('2024')
+        page.locator('#research-to').press('Tab')
+        expect(page.locator('#research-kpis .stat-value').first).to_have_text(f"{summary['venues']['ECCV']['years']['2024']:,}")
+        page.locator('#research-level').select_option('subtopics')
+        page.locator('#research-focus').select_option('Neural rendering')
+        expected = sum(p['venue']=='ECCV' and p['year']==2024 and 'Neural rendering' in p['subtopics'] for p in corpus)
+        expect(page.locator('#research-kpis .stat-value').nth(1)).to_have_text(f'{expected:,}')
+        page.screenshot(path=str(screenshots / 'preview-research.png'))
+        page.locator('#research-papers').click()
+        expect(page.locator('#result-status')).to_have_text(f'{expected:,} papers in this view')
+        expect(page.locator('#subtopic')).to_have_value('Neural rendering')
+        checks.append('ECCV 2025 is empty; 2024 edition, detailed topics and paper drilldown agree')
+        page.get_by_role('link', name='Research areas', exact=True).click()
+        with page.expect_download() as event:
+            page.locator('#research-export').click()
+        event.value.save_as(str(screenshots / 'research-statistics.csv'))
+        with (screenshots / 'research-statistics.csv').open(encoding='utf-8-sig', newline='') as f:
+            exported = list(csv.DictReader(f))
+        neural = next(r for r in exported if r['topic']=='Neural rendering')
+        assert int(neural['papers']) == expected
+        assert abs(float(neural['share_percent']) - 100*expected/summary['venues']['ECCV']['years']['2024']) < 1e-9
+        checks.append('Research CSV percentages use the selected paper denominator')
+        page.get_by_role('link', name='Global research', exact=True).click()
+        expect(page.locator('#world-map svg')).to_be_visible(timeout=60000)
+        page.locator('#world-venue').select_option('CVPR')
+        page.locator('#world-from').fill('2025')
+        page.locator('#world-to').fill('2025')
+        page.locator('#world-to').press('Tab')
+        page.locator('#world-topic').select_option('3D Vision')
+        selected = [p for p in corpus if p['venue']=='CVPR' and p['year']==2025]
+        korean = [p for p in selected if 'KR' in geo['papers'].get(p['id'],{}).get('countries',{})]
+        topic_papers = [p for p in korean if '3D Vision' in p['topics']]
+        author_ids = {a for p in topic_papers for a in geo['papers'][p['id']]['countries']['KR']}
+        assert korean and topic_papers
+        row = page.locator('#world-table tr').filter(has=page.locator('[data-country="KR"]'))
+        expect(row.locator('td').nth(1)).to_have_text(f'{len(author_ids):,}')
+        expect(row.locator('td').nth(2)).to_have_text(f'{len(topic_papers):,}')
+        expect(row.locator('td').nth(3)).to_have_text(f'{len(korean):,}')
+        expect(row.locator('td').nth(4)).to_have_text(f'{100*len(topic_papers)/len(korean):.1f}%')
+        page.locator('#world-map [data-country="KR"]').click()
+        expect(page.locator('#world-country')).to_have_value('KR')
+        expect(page.locator('#country-heading')).to_contain_text('South Korea')
+        expect(page.locator('#country-chart svg')).to_be_visible()
+        page.screenshot(path=str(screenshots / 'preview-world.png'))
+        with page.expect_download() as event:
+            page.locator('#world-export').click()
+        event.value.save_as(str(screenshots / 'country-statistics.csv'))
+        with (screenshots / 'country-statistics.csv').open(encoding='utf-8-sig', newline='') as f:
+            kr = next(r for r in csv.DictReader(f) if r['country_code']=='KR')
+        assert int(kr['unique_authors']) == len(author_ids)
+        assert int(kr['topic_papers']) == len(topic_papers)
+        checks.append('Country map, unique author IDs, topic percentages and CSV match source data')
+        # A researcher with two papers must count once; dual affiliations count
+        # in both countries; an unlocated author is not assigned by name.
+        result = page.evaluate("""() => {
+            const saved = geoData;
+            try {
+                geoData = {papers:{a:{authors:2,known_authors:1,countries:{US:['A1'],KR:['A1']}},b:{authors:1,known_authors:1,countries:{US:['A1']}}}};
+                const p = id => ({id,topics:['3D Vision'],subtopics:[]});
+                const result = summarizeCountries([p('a'),p('b'),p('missing')],'3D Vision');
+                return {mapped:result.mapped,countries:result.countries.map(g=>[g.code,g.authors.size,g.selected.length])};
+            } finally {geoData = saved;}
+        }""")
+        assert result['mapped']==2
+        assert sorted(result['countries'])==[['KR',1,1],['US',1,2]]
+        checks.append('Repeated authors, dual affiliations and unknown countries have distinct semantics')
+        page.set_viewport_size({'width':390,'height':844})
+        assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
+        page.screenshot(path=str(screenshots / 'preview-world-mobile.png'))
+        page.get_by_role('link', name='Research areas', exact=True).click()
+        assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
+        page.set_viewport_size({'width':1440,'height':1000})
         page.get_by_role('link', name='About the data', exact=True).click()
         expect(page.locator('#coverage-body tr')).to_have_count(6)
         checks.append('Provenance and venue coverage')

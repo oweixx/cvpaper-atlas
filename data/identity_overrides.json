@@ -1,0 +1,12 @@
+[
+  {
+    "official_url": "https://www.ecva.net/papers/eccv_2018/papers_ECCV/html/Amit_Raj_SwapNet_Garment_Transfer_ECCV_2018_paper.php",
+    "doi": "10.1007/978-3-030-01258-8_41",
+    "venue": "ECCV",
+    "year": 2018,
+    "official_title": "SwapNet: Garment Transfer in Single View Images",
+    "bibliographic_title": "SwapNet: Image Based Garment Transfer",
+    "evidence_url": "https://dblp.org/rec/conf/eccv/RajSCHCL18.html",
+    "reason": "Reviewed title variant: same ECCV 2018 paper and six-author set; official accepted-paper title differs from publisher title."
+  }
+]

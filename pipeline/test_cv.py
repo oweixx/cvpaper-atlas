@@ -3,6 +3,10 @@ import unittest
 from build_cv import merge_records
 from collect_cv import classify_container, crossref_record, parse_listing
 from enrich_openalex import reconstruct
+from metadata import valid_edition, normalize_doi, parse_author_text
+from collect_affiliations import normalize_authorships
+from geography import build_geography
+from taxonomy import classify
 
 
 def paper(**overrides):
@@ -72,6 +76,76 @@ class IdentityTests(unittest.TestCase):
 
     def test_unavailable_citations_are_not_zero(self):
         self.assertIsNone(merge_records([], [paper()])[0]['citation_count'])
+
+
+class CorrectedStatisticsTests(unittest.TestCase):
+    def test_eccv_publication_year_is_not_event_year(self):
+        base = paper(venue='ECCV', year=2025, doi='10.1/eccv', sources=['DBLP'])
+        cr = paper(venue='ECCV', year=2024, doi='10.1/eccv', sources=['Crossref'], container_title='Computer Vision - ECCV 2024')
+        official = paper(venue='ECCV', year=2024, sources=['ECVA'])
+        result = merge_records([cr], [official], [base])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['year'], 2024)
+        self.assertEqual(result[0]['publication_year'], 2025)
+        self.assertEqual(result[0]['source_years']['DBLP'], [2025])
+
+    def test_reject_off_calendar_and_preserve_historical_iccv(self):
+        self.assertFalse(valid_edition('ECCV', 2025))
+        self.assertFalse(valid_edition('ICCV', 2024))
+        for y in [1988, 1990, 1998, 1999, 2025]:
+            self.assertTrue(valid_edition('ICCV', y))
+        with self.assertRaises(ValueError):
+            merge_records([], [paper(venue='ECCV', year=2025)])
+
+    def test_ecva_bibtex_names_and_doi_whitespace_do_not_duplicate(self):
+        names = parse_author_text('Yuan, Ye and Kitani, Kris M.')
+        self.assertEqual(names, ['Ye Yuan', 'Kris M. Kitani'])
+        base = paper(venue='ECCV', year=2018, authors=names, doi='10.1007/abc_1', sources=['DBLP'])
+        official = paper(venue='ECCV', year=2018, authors=['Ye Yuan', 'Kris Kitani'], doi='https://doi.org/10.1007/abc%20_1', sources=['ECVA'])
+        self.assertEqual(len(merge_records([], [official], [base])), 1)
+        self.assertEqual(normalize_doi(official['doi']), base['doi'])
+        self.assertEqual(parse_author_text('Ikehata, Satoshi', bibtex=True), ['Satoshi Ikehata'])
+
+    def test_title_variant_requires_full_author_signature(self):
+        base = paper(doi='10.1/a', title='Scaling Egocentric Vision: The Dataset', authors=['Dima Damen','Sanja Fidler'], sources=['DBLP'])
+        official = paper(title='Scaling Egocentric Vision: The EPIC-KITCHENS Dataset', authors=['Dima Damen','Sanja Fidler'])
+        merged = merge_records([], [official], [base])
+        self.assertEqual(len(merged), 1)
+        self.assertIn('title_variant', merged[0])
+        distinct = {**official, 'authors':['Dima Damen','Other Person']}
+        self.assertEqual(len(merge_records([], [distinct], [base])), 2)
+
+    def test_official_wrong_doi_cannot_attach_to_another_title(self):
+        base = paper(venue='ECCV', year=2025, doi='10.1/right', sources=['DBLP'])
+        different = paper(venue='ECCV', year=2024, doi='10.1/wrong', title='A different paper', authors=['Bob Jones'], sources=['DBLP'])
+        official = paper(venue='ECCV', year=2024, doi='10.1/wrong', sources=['ECVA'])
+        result = merge_records([], [official], [base, different])
+        matched = next(p for p in result if p['doi'] == '10.1/right')
+        self.assertEqual(matched['year'], 2024)
+        self.assertEqual(matched['identity_correction']['original_doi'], '10.1/wrong')
+        self.assertNotIn('ECVA', next(p for p in result if p['doi']=='10.1/wrong')['sources'])
+
+    def test_country_identity_multiple_affiliations_and_missing(self):
+        work = {'authorships': [
+            {'author': {'id':'https://openalex.org/A1'}, 'countries':['US'], 'institutions':[{'country_code':'KR'}]},
+            {'author': {'id':'https://openalex.org/A1'}, 'countries':['US']},
+            {'author': {'id':'https://openalex.org/A2'}, 'countries':[]}]}
+        authors = normalize_authorships(work)
+        self.assertEqual(authors, [{'id':'A1','countries':['KR','US']},{'id':'A2','countries':[]}])
+        records = {'10.1/a': {'authors':authors}, '10.1/b': {'authors':authors}}
+        data = build_geography([{'id':'a','doi':'10.1/a'},{'id':'b','doi':'10.1/b'},{'id':'c','doi':''}],records,{'complete':True})
+        self.assertEqual(data['coverage']['papers_with_country'], 2)
+        self.assertEqual(data['coverage']['unique_author_ids_with_country'], 1)
+        self.assertEqual(data['coverage']['returned_authorships'], 4)
+        self.assertEqual(data['papers']['a']['countries'], {'KR':['A1'],'US':['A1']})
+        self.assertNotIn('c', data['papers'])
+
+    def test_multilabel_taxonomy_uses_consistent_title_evidence(self):
+        areas, details = classify('Diffusion Models for Medical Image Segmentation')
+        self.assertIn('Medical & Scientific Vision', areas)
+        self.assertIn('Diffusion models', details)
+        self.assertIn('Segmentation', details)
+        self.assertEqual(classify('A New Approach')[0], ['Other / Unclassified'])
 
 
 if __name__ == '__main__':

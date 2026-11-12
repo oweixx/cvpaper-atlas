@@ -27,12 +27,13 @@ jobs:
           python -m unittest discover -s pipeline -p test_cv.py -v
           python pipeline/validate_cv.py
           node --check assets/app.js
+          node --check assets/analytics.js
       - name: Assemble the static website
         run: |
           mkdir -p _site/assets _site/data _site/downloads
-          cp .nojekyll index.html explorer.html by_year.html coauthor_network.html dataset_preview.html _site/
-          cp assets/app.js assets/style.css _site/assets/
-          cp data/{cvpr,iccv,eccv,wacv,tpami,ijcv,summary,network,coverage}.json _site/data/
+          cp .nojekyll index.html explorer.html by_year.html coauthor_network.html research_areas.html global_research.html dataset_preview.html _site/
+          cp assets/app.js assets/analytics.js assets/style.css _site/assets/
+          cp data/{cvpr,iccv,eccv,wacv,tpami,ijcv,summary,geography,world,year_audit,coverage,coverage_affiliations}.json _site/data/
           cp downloads/cvpaper_atlas.{xlsx,csv.gz,jsonl.gz} _site/downloads/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4

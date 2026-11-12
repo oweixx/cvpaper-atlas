@@ -15,3 +15,4 @@ jobs:
       - run: python -m unittest discover -s pipeline -p test_cv.py -v
       - run: python pipeline/validate_cv.py
       - run: node --check assets/app.js
+      - run: node --check assets/analytics.js

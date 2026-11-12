@@ -19,6 +19,7 @@ from urllib.parse import urljoin, urlencode
 import requests
 from bs4 import BeautifulSoup
 from cv_config import CACHE, DATA, VENUES
+from metadata import normalize_doi, parse_author_text
 
 TODAY = datetime.now(timezone.utc).date().isoformat()
 if hasattr(sys.stdout, 'reconfigure'):
@@ -240,7 +241,7 @@ def parse_listing(content, base, venue, year):
         if dd is None:
             continue
         inputs = dd.select('input[name="query_author"]')
-        authors = [clean(i.get('value')) for i in inputs] if inputs else [clean(x).strip('* ') for x in dd.get_text(' ', strip=True).split(',')]
+        authors = [clean(i.get('value')) for i in inputs] if inputs else parse_author_text(clean(dd.get_text(' ', strip=True)), bibtex=venue == 'ECCV' and actual_year == 2018)
         links = []
         for sibling in dt.find_next_siblings():
             if sibling.name == 'dt':
@@ -252,7 +253,7 @@ def parse_listing(content, base, venue, year):
             if link.get_text(strip=True).lower() == 'pdf':
                 pdf = target
             if 'doi.org/' in target or '/chapter/10.' in target:
-                doi = re.sub(r'^.*?(10\.)', r'\1', target).lower()
+                doi = normalize_doi(re.sub(r'^.*?(10\.)', r'\1', target))
         if not authors or not clean(a.get_text()):
             continue
         source = 'ECVA' if venue == 'ECCV' else 'CVF'

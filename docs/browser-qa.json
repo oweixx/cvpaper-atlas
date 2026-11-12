@@ -1,4 +1,5 @@
 {
+  "base_url": "http://127.0.0.1:8765/",
   "passed": [
     "Full corpus loads and paginates",
     "Known DOI resolves to ResNet; available abstract expands",
@@ -6,11 +7,14 @@
     "Venue and year filters match dataset totals",
     "Topic filter and CSV export contain matching records",
     "Pagination and page size",
-    "Annual trend chart and annual counts",
-    "Co-author network, threshold and author navigation",
+    "Annual trend chart and calendar-aware annual counts",
+    "ECCV 2025 is empty; 2024 edition, detailed topics and paper drilldown agree",
+    "Research CSV percentages use the selected paper denominator",
+    "Country map, unique author IDs, topic percentages and CSV match source data",
+    "Repeated authors, dual affiliations and unknown countries have distinct semantics",
     "Provenance and venue coverage",
     "Mobile viewport has no page-level horizontal overflow"
   ],
   "browser_errors": [],
-  "papers": 74784
+  "papers": 73522
 }

@@ -1,0 +1,30 @@
+<section class="view" id="view-research">
+  <div class="notice">Topics are assigned from paper titles using transparent keyword rules. A paper can have multiple labels; percentages are shares of papers and may add up to more than 100%. Current-year results and source indexing may be incomplete.</div>
+  <div class="panel analytics-controls">
+    <label>From year<input id="research-from" type="number" class="control" aria-label="Research from year"></label>
+    <label>To year<input id="research-to" type="number" class="control" aria-label="Research to year"></label>
+    <label>Venue<select id="research-venue" class="control" aria-label="Research venue"></select></label>
+    <label>Detail level<select id="research-level" class="control"><option value="topics">Research areas</option><option value="subtopics">Detailed topics</option></select></label>
+    <label class="wide">Focus topic<select id="research-focus" class="control"></select></label>
+    <label>Chart measure<select id="research-measure" class="control"><option value="share">Share of papers (%)</option><option value="count">Paper count</option></select></label>
+  </div>
+  <div class="analytics-kpis" id="research-kpis" aria-live="polite"></div>
+  <div class="panel"><div class="panel-heading"><div><h2 id="research-chart-title">Topic over time</h2><p id="research-denominator"></p></div><button class="text-button" id="research-papers">Explore these papers ↗</button></div><div class="chart" id="research-chart"></div></div>
+  <div class="two-col below"><div class="panel"><div class="panel-heading"><h3>Research mix</h3><button class="text-button" id="research-export">Export statistics CSV ↗</button></div><div id="research-bars" class="share-bars"></div></div><div class="panel"><div class="panel-heading"><h3>Detailed breakdown</h3><span class="badge" id="research-scope"></span></div><div class="table-wrap analytics-table"><table aria-label="Research area statistics"><thead><tr><th>Topic</th><th>Papers</th><th>Share</th></tr></thead><tbody id="research-table"></tbody></table></div></div></div>
+</section>
+<section class="view" id="view-world">
+  <div class="notice">Countries and regions refer to author affiliations recorded on each paper, <b>not nationality</b>. Counts use OpenAlex author IDs. Multiple affiliations can put the same author in more than one country. Institutional matching can be inaccurate; unavailable affiliations remain unknown.</div>
+  <div class="panel analytics-controls">
+    <label>From year<input id="world-from" type="number" class="control" aria-label="Global from year"></label>
+    <label>To year<input id="world-to" type="number" class="control" aria-label="Global to year"></label>
+    <label>Venue<select id="world-venue" class="control" aria-label="Global venue"></select></label>
+    <label class="wide">Research topic<select id="world-topic" class="control" aria-label="Global research topic"></select></label>
+    <label>Map measure<select id="world-measure" class="control"><option value="authors">Unique authors</option><option value="papers">Papers</option><option value="share">Topic share (%)</option></select></label>
+    <label class="wide">Country / region<select id="world-country" class="control" aria-label="Country or region"></select></label>
+  </div>
+  <div id="world-coverage" class="notice below" role="status">Loading affiliation coverage…</div>
+  <div class="analytics-kpis" id="world-kpis"></div>
+  <div class="panel"><div class="panel-heading"><div><h2>Where research takes shape</h2><p id="world-map-caption">Select a country on the map or in the list.</p></div><span class="badge">Work-time affiliations</span></div><div id="world-map" class="world-map"></div><div class="map-key"><span class="gradient"></span><span id="world-scale"></span><span class="unknown-swatch"></span> No matching data <a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noopener noreferrer">Map: Natural Earth</a></div></div>
+  <div class="two-col below"><div class="panel"><div class="panel-heading"><div><h3 id="country-heading">Country research profile</h3><p id="country-denominator"></p></div></div><div id="country-bars" class="share-bars"></div></div><div class="panel"><div class="panel-heading"><div><h3 id="country-trend-title">Topic share over time</h3><p>Percentage of this country's indexed papers in each year</p></div></div><div id="country-chart" class="chart"></div><div id="country-year-coverage" class="filter-note chart-caption"></div></div></div>
+  <div class="panel below"><div class="panel-heading"><div><h3>Country / region comparison</h3><p>Author counts are unique within the selected period and topic; country totals are not additive.</p></div><button class="text-button" id="world-export">Export statistics CSV ↗</button></div><div class="table-wrap analytics-table"><table aria-label="Country research statistics"><thead><tr><th>Country / region</th><th>Unique authors</th><th>Topic papers</th><th>All area papers</th><th>Topic share</th><th>Leading area</th></tr></thead><tbody id="world-table"></tbody></table></div></div>
+</section>

@@ -2,19 +2,19 @@
 
 ## Scope and results
 
-- Published corpus: **74,784** records, **1979–2026**.
-- Abstracts: **53,251 (71.2%)**.
-- Citation counts: **69,392 (92.8%)**.
-- Direct public PDF links: **42,238**; no PDFs are redistributed.
-- DOI-bearing records: **69,480**. DOI-less official papers remain searchable.
+- Published corpus: **73,522** records, **1979–2026**.
+- Abstracts: **53,251 (72.4%)**.
+- Citation counts: **69,392 (94.4%)**.
+- Direct public PDF links: **42,239**; no PDFs are redistributed.
+- DOI-bearing records: **69,397**. DOI-less official papers remain searchable.
 
 | Venue | Years | Papers | Abstracts | Citations |
 |---|---:|---:|---:|---:|
-| CVPR | 1988–2026 | 28,713 | 85.0% | 85.1% |
-| ICCV | 1988–2025 | 11,824 | 93.6% | 98.6% |
-| ECCV | 1990–2026 | 12,877 | 0.3% | 93.3% |
-| WACV | 1992–2026 | 6,368 | 98.7% | 99.4% |
-| TPAMI | 1979–2026 | 11,068 | 98.8% | 99.6% |
+| CVPR | 1988–2026 | 28,493 | 85.6% | 85.7% |
+| ICCV | 1988–2025 | 11,679 | 94.8% | 99.8% |
+| ECCV | 1990–2026 | 12,018 | 0.3% | 100.0% |
+| WACV | 1992–2026 | 6,338 | 99.1% | 99.8% |
+| TPAMI | 1979–2026 | 11,060 | 98.9% | 99.7% |
 | IJCV | 1987–2026 | 3,934 | 13.3% | 100.0% |
 
 ## Audited sources
@@ -31,7 +31,19 @@ The source audit verifies collection of indexed records, not that every historic
 
 DBLP's ordinary search endpoint returned an automated-access challenge. Its separate official SPARQL service worked and was used for the complete indexed corpus. Semantic Scholar's unauthenticated endpoint returned HTTP 429 and is not used for this snapshot. The CVPR 2026 virtual programme's advertised pagination API returned HTTP 403; that incomplete feed was not imported. Official CVF main-conference entries are still included.
 
-Topic labels are keyword heuristics. The graph aggregates author names, so namesakes can be conflated; DBLP author IDs are retained in the underlying records where available.
+Topic labels use title-only keyword heuristics (10 areas / 30 subtopics) consistently across venues. They are multi-label, not official conference tracks. Percentages use selected papers as the denominator.
+
+## Calendar and identity correction
+
+The original snapshot incorrectly retained DBLP publication years after matching conference editions. ECCV 2024 papers published in 2025 are now grouped under the 2024 event. 4,025 merged records retain differing source-year observations in `data/year_audit.json`. Calendar validation rejects off-year ECCV and non-edition ICCV records, preserving historical ICCV even-year events.
+
+ECVA 2018 BibTeX author lists and whitespace in ECVA DOI links are normalized before identity matching. Conservative title-variant matches and corrected erroneous official DOI links are logged in `data/identity_audit.json`. Distinct DOI publications remain distinct.
+
+## Geographic coverage
+
+69,272 corpus records match the affiliation snapshot; 67,913 (92.4%) have at least one known country/region. 90,759 unique OpenAlex author IDs have a known affiliation country. Request completion: True.
+
+Country means work-time affiliation, not nationality. Cross-country counts overlap. Unknown affiliations remain unknown. Institutional matching, headquarters locations, author disambiguation, uneven coverage over time, and the list API's first-100-authorship limit can affect statistics. The interface reports coverage for the selected period/venue and per year. It does not infer a country from names. The public-domain basemap is Natural Earth.
 
 ## Reproduction
 
