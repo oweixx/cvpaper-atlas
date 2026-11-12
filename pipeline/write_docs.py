@@ -101,7 +101,21 @@ python -m playwright install chromium
 python pipeline/smoke_browser.py
 ```
 
-GitHub Actions는 push/PR 시 회귀 테스트, 데이터 일관성 검사와 JavaScript 문법 검사를 실행합니다. 자동 재수집·자동 배포 일정은 설정되어 있지 않습니다.
+GitHub Actions는 push/PR 시 회귀 테스트, 데이터 일관성 검사와 JavaScript 문법 검사를 실행합니다. 자동 재수집 일정은 설정되어 있지 않습니다.
+
+## GitHub Pages
+
+Pages 배포 설정: [pages.yml](.github/workflows/pages.yml). 저장소의 Settings → Pages에서 GitHub Actions를 활성화하면 `main`에 push할 때 검증을 통과한 웹사이트를 자동 배포합니다. Actions 화면에서 수동 실행할 수도 있습니다.
+
+배포 구성에는 HTML·CSS·JavaScript, 검색 데이터, 출처 ledger와 다운로드 파일만 포함됩니다. 수집용 Python 코드, 원본 수집 snapshot, 캐시와 Git 이력은 사이트에 포함되지 않습니다.
+
+배포된 사이트 검증:
+
+```sh
+python pipeline/smoke_browser.py --base-url https://oweixx.github.io/cvpaper-atlas/ --output-dir .cache/pages-qa
+```
+
+GitHub Free에서는 공개 저장소의 Pages를 사용할 수 있습니다. 비공개 저장소에서 Pages를 사용하려면 이를 지원하는 요금제가 필요합니다. [GitHub 공식 안내](https://docs.github.com/en/pages/getting-started-with-github-pages).
 
 ## 출처와 프로젝트 이력
 

@@ -2,6 +2,7 @@
 
 Run a local server first: python -m http.server 8765 --bind 127.0.0.1
 """
+import argparse
 import csv
 import json
 from pathlib import Path
@@ -11,16 +12,20 @@ from cv_config import ROOT, DATA
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--base-url', default='http://127.0.0.1:8765/')
+    parser.add_argument('--output-dir', type=Path, default=ROOT / 'docs')
+    args = parser.parse_args()
     summary = json.loads((DATA / 'summary.json').read_text(encoding='utf-8'))
-    screenshots = ROOT / 'docs'
-    screenshots.mkdir(exist_ok=True)
+    screenshots = args.output_dir
+    screenshots.mkdir(parents=True, exist_ok=True)
     errors, checks = [], []
     with sync_playwright() as runtime:
         browser = runtime.chromium.launch(headless=True)
         page = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
         page.on('pageerror', lambda error: errors.append(str(error)))
-        page.goto('http://127.0.0.1:8765', wait_until='domcontentloaded')
-        expect(page.locator('#result-status')).to_have_text(f"{summary['total']:,} papers in this view", timeout=90000)
+        page.goto(args.base_url, wait_until='domcontentloaded')
+        expect(page.locator('#result-status')).to_have_text(f"{summary['total']:,} papers in this view", timeout=180000)
         expect(page.locator('#paper-body tr')).to_have_count(25)
         checks.append('Full corpus loads and paginates')
         page.screenshot(path=str(screenshots / 'preview-desktop.png'))
@@ -52,7 +57,7 @@ def main():
         with page.expect_download() as event:
             page.get_by_role('button', name='Export CSV', exact=False).click()
         download = event.value
-        export_path = ROOT / '.cache' / 'filtered-qa.csv'
+        export_path = screenshots / 'filtered-qa.csv'
         download.save_as(str(export_path))
         with export_path.open(encoding='utf-8-sig', newline='') as f:
             assert len(list(csv.DictReader(f))) == count
@@ -88,7 +93,7 @@ def main():
         checks.append('Mobile viewport has no page-level horizontal overflow')
         browser.close()
     assert not errors, errors
-    report = {'passed': checks, 'browser_errors': errors, 'papers': summary['total']}
+    report = {'base_url': args.base_url, 'passed': checks, 'browser_errors': errors, 'papers': summary['total']}
     (screenshots / 'browser-qa.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
     print(json.dumps(report, indent=2))
 
